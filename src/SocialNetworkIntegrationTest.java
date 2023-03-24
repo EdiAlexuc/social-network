@@ -16,7 +16,7 @@ public class SocialNetworkIntegrationTest {
         socialNetwork.addFriend("B","C");
         socialNetwork.addFriend("C","D");
 
-        assertEquals(2, socialNetwork.shortestChainlength("A", "D"));
+        assertEquals(3, socialNetwork.shortestChainlength("A", "D"));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class SocialNetworkIntegrationTest {
         socialNetwork.addFriend("D","H");
         socialNetwork.addFriend("G","I");
 
-        assertEquals(2, socialNetwork.shortestChainlength("A", "I"));
+        assertEquals(3, socialNetwork.shortestChainlength("A", "I"));
     }
 
     @Test
@@ -56,5 +56,25 @@ public class SocialNetworkIntegrationTest {
 
         assertEquals(-1, socialNetwork.shortestChainlength("A", "C"));
     }
+    @Test
+    void testMultiplePaths() {
+        SocialNetwork socialNetwork = new AdjacencyListSocialNetwork();
 
+        socialNetwork.addUser("A");
+        socialNetwork.addUser("B");
+        socialNetwork.addUser("C");
+        socialNetwork.addUser("D");
+        socialNetwork.addUser("E");
+
+        socialNetwork.addFriend("A", "B");
+        socialNetwork.addFriend("B", "C");
+        socialNetwork.addFriend("C", "D");
+        socialNetwork.addFriend("D", "E");
+        socialNetwork.addFriend("A", "E");
+
+        assertEquals(1, socialNetwork.shortestChainlength("A", "B"));
+        assertEquals(2, socialNetwork.shortestChainlength("A", "C"));
+        assertEquals(2, socialNetwork.shortestChainlength("A", "D"));
+        assertEquals(1, socialNetwork.shortestChainlength("A", "E"));
+    }
 }
